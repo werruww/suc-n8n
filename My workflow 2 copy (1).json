@@ -1,0 +1,152 @@
+{
+  "name": "My workflow 2 copy",
+  "nodes": [
+    {
+      "parameters": {
+        "model": "deepseek-r1:7b",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+      "typeVersion": 1,
+      "position": [
+        304,
+        48
+      ],
+      "id": "b5143c56-fa48-47c8-af79-6bfda3caa114",
+      "name": "Ollama Chat Model",
+      "credentials": {
+        "ollamaApi": {
+          "id": "oMR0q8yMRoXBYHk4",
+          "name": "Ollama account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "formTitle": "input form",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "input",
+              "fieldType": "file",
+              "acceptFileTypes": ".pdf",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        -304,
+        -128
+      ],
+      "id": "3d5d4dc3-23c4-47b4-b1f6-af7698d9dfb0",
+      "name": "On form submission",
+      "webhookId": "a0f269fe-053b-4e1a-9ea6-bbd771f55e00"
+    },
+    {
+      "parameters": {
+        "fileSelector": "C:/rag/files/1111.pdf",
+        "options": {
+          "fileExtension": ".pdf"
+        }
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        -96,
+        -112
+      ],
+      "id": "f2a493cb-dd22-41e4-b0d5-30bb35055afa",
+      "name": "Read/Write Files from Disk"
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        192,
+        -112
+      ],
+      "id": "914fc9b2-69af-48c4-a6b3-806ab167f047",
+      "name": "Extract from File"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "summarize text in 1111.pdf?",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        400,
+        -128
+      ],
+      "id": "c591335d-899e-49a1-b903-ab14844b431a",
+      "name": "AI Agent"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Ollama Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Read/Write Files from Disk",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read/Write Files from Disk": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "e12c3fce-16f2-4fb3-8125-d0141bebda0e",
+  "meta": {
+    "instanceId": "b51ba91c313077bb0b25f4e9c63b489be0ddc68550e23cf85894bb4b2cfa5f1b"
+  },
+  "id": "Fx0PPgQtOe036mR6",
+  "tags": []
+}

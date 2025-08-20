@@ -1,0 +1,95 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "input from",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "input",
+              "fieldType": "file",
+              "acceptFileTypes": ".pdf",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        -240,
+        -80
+      ],
+      "id": "34b5c0dc-eec5-4afd-9098-fbaec74806ec",
+      "name": "On form submission",
+      "webhookId": "c6950705-76a8-4205-badd-8f1b3d23dfc5"
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "binaryPropertyName": "input",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        -32,
+        -80
+      ],
+      "id": "7308510c-2032-4917-9f70-f2cc50fd7dc9",
+      "name": "Extract from File"
+    },
+    {
+      "parameters": {
+        "operation": "toText",
+        "sourceProperty": "text",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        176,
+        -80
+      ],
+      "id": "ba5e294a-558e-4cd7-863c-4cf369a1f857",
+      "name": "Convert to File"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "Convert to File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "cbdb6092-9fc6-488a-b497-265bab9c707b",
+  "meta": {
+    "instanceId": "b51ba91c313077bb0b25f4e9c63b489be0ddc68550e23cf85894bb4b2cfa5f1b"
+  },
+  "id": "y6SzdRi1KFQHkan5",
+  "tags": []
+}
